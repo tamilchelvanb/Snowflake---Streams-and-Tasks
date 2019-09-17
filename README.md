@@ -32,13 +32,14 @@ In a continuous data pipeline, tasks may optionally use streams to provide a con
 ## Create Streams from the table which hold json in variant data type
 For this illustration, create a stream called CLOUDTRAIL_STREAM and CLOUDTRAIL_STREAM2 on the table CLOUDTRAIL_ROLE. CLOUDTRAIL_ROLE is the place where the json logs are saved in variant.
 
-'''
+```
 CREATE OR REPLACE STREAM CLOUDTRAIL_STREAM
     ON TABLE SNOWTABLE_ROLE;
 
 CREATE OR REPLACE STREAM CLOUDTRAIL_STREAM2
     ON TABLE SNOWTABLE_ROLE;
-'''
+
+```
 
 CLOUDTRAIL_STREAM and CLOUDTRAIL_STREAM2 will capture every change in this case new data flowing into the table from snowpipe. As the data flows in streams will capture the inserts. 
 
@@ -46,6 +47,7 @@ CLOUDTRAIL_STREAM and CLOUDTRAIL_STREAM2 will capture every change in this case 
 ## Create relational tables that will store the transformed json data
 The following tables are created to store the data that will be generated from the transformation of the json file. 
 
+```
 CREATE OR REPLACE TABLE HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD1 (AWSREGION STRING,
                                              EVENTID STRING);
 
@@ -54,6 +56,7 @@ CREATE OR REPLACE TABLE HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD2 (AWSRE
                                                                            RECEPIENT_ACCOUNTID NUMBER,
                                                                            REQUESTID STRING);
 
+```
 
 This transformation and load will now be automated using Task.
 
@@ -63,13 +66,14 @@ We will be using the following DML statements to get the data from json to the t
 
 Use the following statements to create tasks. To understand the different options of creating a task, we have the first task, SNOWTABLE_ROLE_PROD1 that will be based on a 5 minute schedule and the second task, SNOWTABLE_ROLE_PROD2 based on the first task. The Task SNOWTABLE_ROLE_PROD will be the predecessor of the task SNOWTABLE_ROLE_PROD2.
 
-*/INSERT INTO HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD1
+```
+INSERT INTO HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD1
 SELECT F.VALUE:awsRegion::STRING AS AWS_REGION
    , F.VALUE:eventID::STRING AS EVENT_ID 
 FROM HASHMAP_TRAINING_DB.TRAINING.CLOUDTRAIL_STREAM T
    , LATERAL FLATTEN (input => T.V) F
    , LATERAL FLATTEN (input => F.VALUE:resources) LF
-WHERE METADATA$ACTION = 'INSERT'; */
+WHERE METADATA$ACTION = 'INSERT';
 
 INSERT INTO HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD2
 SELECT F.VALUE:awsRegion::STRING AS AWS_REGION
@@ -80,6 +84,7 @@ FROM HASHMAP_TRAINING_DB.TRAINING.CLOUDTRAIL_STREAM T
    , LATERAL FLATTEN (input => F.VALUE:resources) LF
 WHERE METADATA$ACTION = 'INSERT';
 
+```
 
 Execute the following command to ensure the tasks are created. 
 
@@ -88,13 +93,19 @@ SHOW TASKS;
 
 You will see the state of the tasks are listed as suspend. The Task by default will be created in suspended status. We have to Resume the task for them to execute based on the setting we made.
 
+
+```
 ALTER TASK CLOUDTRAIL_TSK1 RESUME;
 
 ALTER TASK CLOUDTRAIL_TSK2 RESUME;
 
+```
 
 To confirm the data are successfully transformed and loaded, execute the select statements below.
 
+```
 SELECT * FROM SNOWTABLE_ROLE_PROD1;
 
 SELECT * FROM SNOWTABLE_ROLE_PROD2;
+
+```
