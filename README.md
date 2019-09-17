@@ -102,6 +102,7 @@ ALTER TASK CLOUDTRAIL_TSK2 RESUME;
 
 ```
 
+## Verify the results
 To confirm the data are successfully transformed and loaded, execute the select statements below.
 
 ```
