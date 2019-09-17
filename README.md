@@ -15,4 +15,4 @@ https://docs.snowflake.net/manuals/user-guide/data-load-s3-config.html
 https://docs.snowflake.net/manuals/user-guide/data-load-snowpipe-auto-s3.html#option-1-creating-a-new-s3-event-notification-to-automate-snowpipe
 
 
-* At this stage, we should have the data logs created from Cloud Trail flowing in to the S3 bucket. The S3 data is consumed by Snowflake Snowpipe using the AWS role through SQS event notification. There should be a continuous flow of these json files into the variant table created as the logs are getting generated. We will now focus on pushing the log files to a structured format using Streams and automate this flow through Tasks. *
+*At this stage, we should have the data logs created from Cloud Trail flowing in to the S3 bucket. The S3 data is consumed by Snowflake Snowpipe using the AWS role through SQS event notification. There should be a continuous flow of these json files into the variant table created as the logs are getting generated. We will now focus on pushing the log files to a structured format using Streams and automate this flow through Tasks.*
