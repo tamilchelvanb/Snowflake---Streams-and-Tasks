@@ -57,18 +57,18 @@ CREATE OR REPLACE TABLE HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD2 (AWSRE
 This transformation and load will now be automated using Task.
 
 
-## Create Tasks to automate the cdc from the table that snowpipe pushes data from S3
+## Create Tasks to automate the cdc from the variant table stream to the relational tables
 We will be using the following DML statements to get the data from json to the tables that we created.
 
 Use the following statements to create tasks. To understand the different options of creating a task, we have the first task, SNOWTABLE_ROLE_PROD1 that will be based on a 5 minute schedule and the second task, SNOWTABLE_ROLE_PROD2 based on the first task. The Task SNOWTABLE_ROLE_PROD will be the predecessor of the task SNOWTABLE_ROLE_PROD2.
 
-INSERT INTO HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD1
+*/INSERT INTO HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD1
 SELECT F.VALUE:awsRegion::STRING AS AWS_REGION
    , F.VALUE:eventID::STRING AS EVENT_ID 
 FROM HASHMAP_TRAINING_DB.TRAINING.CLOUDTRAIL_STREAM T
    , LATERAL FLATTEN (input => T.V) F
    , LATERAL FLATTEN (input => F.VALUE:resources) LF
-WHERE METADATA$ACTION = 'INSERT';
+WHERE METADATA$ACTION = 'INSERT'; */
 
 INSERT INTO HASHMAP_TRAINING_DB.TRAINING.SNOWTABLE_ROLE_PROD2
 SELECT F.VALUE:awsRegion::STRING AS AWS_REGION
