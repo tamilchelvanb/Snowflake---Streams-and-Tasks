@@ -11,8 +11,7 @@
 >1. You have a AWS account and cloud trail logs of your account are setup to S3 Bucket.
 >2. Configure an AWS IAM role with the required policies and permissions to access your external S3 bucket. This approach allows individual users to avoid providing and managing security credentials and access keys.
 https://docs.snowflake.net/manuals/user-guide/data-load-s3-config.html
->3. Create and Automate the snowpipe to create event notifications.
-(https://docs.snowflake.net/manuals/user-guide/data-load-snowpipe-auto-s3.html#option-1-creating-a-new-s3-event-notification-to-automate-snowpipe)
+>3. Create and Automate the snowpipe to create [event notifications.](https://docs.snowflake.net/manuals/user-guide/data-load-snowpipe-auto-s3.html#option-1-creating-a-new-s3-event-notification-to-automate-snowpipe)
 
 
 *At this stage, we should have the data logs created from Cloud Trail flowing in to the S3 bucket. The S3 data is consumed by Snowflake Snowpipe using the AWS role through SQS event notification. There should be a continuous flow of these json files into the variant table created as the logs are getting generated. We will now focus on pushing the log files to a structured format using Streams and automate this flow through Tasks.*
