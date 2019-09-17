@@ -8,8 +8,8 @@
         - Using Tasks the data in streams are scheduled/automated to be loaded the target tables
 
 ## Prerequisites:
->You have a AWS account and cloud trail logs of your account are setup to S3 Bucket.
->Configure an AWS IAM role with the required policies and permissions to access your external S3 bucket. This approach allows individual users to avoid providing and managing security credentials and access keys.
+>1. You have a AWS account and cloud trail logs of your account are setup to S3 Bucket.
+>2. Configure an AWS IAM role with the required policies and permissions to access your external S3 bucket. This approach allows individual users to avoid providing and managing security credentials and access keys.
 https://docs.snowflake.net/manuals/user-guide/data-load-s3-config.html
->Create and Automate the snowpipe to create event notifications.
+>3. Create and Automate the snowpipe to create event notifications.
 https://docs.snowflake.net/manuals/user-guide/data-load-snowpipe-auto-s3.html#option-1-creating-a-new-s3-event-notification-to-automate-snowpipe
