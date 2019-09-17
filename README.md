@@ -91,6 +91,7 @@ Execute the following command to ensure the tasks are created.
 SHOW TASKS;
 
 
+## Activate the Task
 You will see the state of the tasks are listed as suspend. The Task by default will be created in suspended status. We have to Resume the task for them to execute based on the setting we made.
 
 
