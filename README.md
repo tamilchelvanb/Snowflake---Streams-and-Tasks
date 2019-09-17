@@ -32,12 +32,13 @@ In a continuous data pipeline, tasks may optionally use streams to provide a con
 ## Create Streams from the table which hold json in variant data type
 For this illustration, create a stream called CLOUDTRAIL_STREAM and CLOUDTRAIL_STREAM2 on the table CLOUDTRAIL_ROLE. CLOUDTRAIL_ROLE is the place where the json logs are saved in variant.
 
+'''
 CREATE OR REPLACE STREAM CLOUDTRAIL_STREAM
     ON TABLE SNOWTABLE_ROLE;
 
 CREATE OR REPLACE STREAM CLOUDTRAIL_STREAM2
     ON TABLE SNOWTABLE_ROLE;
-
+'''
 
 CLOUDTRAIL_STREAM and CLOUDTRAIL_STREAM2 will capture every change in this case new data flowing into the table from snowpipe. As the data flows in streams will capture the inserts. 
 
